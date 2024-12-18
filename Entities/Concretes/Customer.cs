@@ -41,9 +41,11 @@ namespace Entities.Concretes
 
         [BsonElement("email_verified")]
         public bool EmailVerified { get; set; } = false;
-
-        // MongoDB'nin otomatik eklediği versiyon kontrol alanı
+            
         [BsonElement("__v")]
         public int Version { get; set; }
+
+        [BsonElement("picture")]
+        public string Picture { get; set; }  
     }
 }

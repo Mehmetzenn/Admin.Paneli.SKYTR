@@ -1,18 +1,20 @@
-﻿using Microsoft.Extensions.Configuration;
-using MongoDB.Driver;
+﻿using MongoDB.Driver;
 
-public class MongoDBContext
+namespace DataAccess.Concretes
 {
-    private readonly IMongoDatabase _database;
-
-    public MongoDBContext(IConfiguration configuration)
+    public class MongoDBContext
     {
-        string connectionString = configuration["MongoDB:ConnectionString"];
-        string databaseName = configuration["MongoDB:DatabaseName"];
+        private readonly IMongoDatabase _database;
 
-        var client = new MongoClient(connectionString);
-        _database = client.GetDatabase(databaseName);
+        public MongoDBContext(string connectionString, string databaseName)
+        {
+            var client = new MongoClient(connectionString);
+            _database = client.GetDatabase(databaseName);
+        }
+
+        public IMongoCollection<T> GetCollection<T>(string collectionName)
+        {
+            return _database.GetCollection<T>(collectionName);
+        }
     }
-
-    public IMongoCollection<T> GetCollection<T>(string collectionName) => _database.GetCollection<T>(collectionName);
 }

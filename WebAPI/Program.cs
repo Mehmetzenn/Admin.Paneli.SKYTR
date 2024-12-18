@@ -1,3 +1,4 @@
+using admýndeneme;
 using Business.Abstracts;
 using Business.Concretes;
 using DataAccess.Abstracts;
@@ -15,17 +16,16 @@ builder.Services.AddSwaggerGen();
 // MongoDB baðlantý dizesini ve diðer yapýlandýrma ayarlarýný appsettings.json'dan alýyoruz
 string connectionString = builder.Configuration.GetValue<string>("MongoDb:ConnectionString");
 string databaseName = builder.Configuration.GetValue<string>("MongoDb:DatabaseName");
-string collectionName = builder.Configuration.GetValue<string>("MongoDb:CollectionName");
 
 // Parametrelerin null olup olmadýðýný kontrol et
-if (string.IsNullOrEmpty(connectionString) || string.IsNullOrEmpty(databaseName) || string.IsNullOrEmpty(collectionName))
+if (string.IsNullOrEmpty(connectionString) || string.IsNullOrEmpty(databaseName))
 {
     throw new ArgumentNullException("MongoDB baðlantý parametreleri boþ olamaz.");
 }
 
 // CustomerDal'ý DI konteynerine ekliyoruz ve gerekli parametreleri saðlýyoruz
 builder.Services.AddScoped<ICustomerDal>(provider =>
-    new CustomerDal(connectionString, databaseName, collectionName));
+    new CustomerDal(connectionString, databaseName)); // Parametre doðru iletildi
 
 builder.Services.AddScoped<ICustomerService, CustomerManager>();
 

@@ -1,4 +1,5 @@
 ﻿using Business.Abstracts;
+using Castle.Core.Resource;
 using Core.Aspects.Autofac.Validation;
 using Core.Utilities.Results;
 using DataAccess.Abstracts;
@@ -18,11 +19,13 @@ namespace Business.Concretes
         public CustomerManager(ICustomerDal customerDal)
         {
             _customerDal = customerDal;
+            
         }
 
         //[ValidationAspect(typeof(CustomerValidator))]
         public IResult Add(Customer customer)
         {
+
             _customerDal.Add(customer);
             return new SuccessResult();
         }
@@ -36,11 +39,15 @@ namespace Business.Concretes
         public IDataResult<List<Customer>> GetAll()
         {
             return new SuccessDataResult<List<Customer>>(_customerDal.GetAll());
+            
         }
 
         public IDataResult<Customer> GetById(string id)
         {
-            return new SuccessDataResult<Customer>(_customerDal.Get(c => c.Id == id));
+
+            var result = new SuccessDataResult<Customer>(_customerDal.Get(c => c.Id == id));
+            Console.WriteLine(result.Data);
+            return result; 
         }
 
         public IResult Update(Customer customer)

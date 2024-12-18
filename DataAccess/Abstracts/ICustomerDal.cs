@@ -6,6 +6,6 @@ namespace DataAccess.Abstracts
 {
     public interface ICustomerDal : IEntityRepository<Customer>
     {
-        // Özel MongoDB sorguları eklenebilir
+        
     }
 }
